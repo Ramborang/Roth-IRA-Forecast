@@ -15,6 +15,7 @@ def Graph(value) -> None:
     plt.ylabel("Account Balance")
     plt.plot(y, value)
     plt.grid()
+    plt.savefig("Roth Forecast.jpg")
     plt.show()
     plt.close()
 
