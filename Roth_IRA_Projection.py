@@ -8,13 +8,15 @@ Created on Fri Nov  8 10:33:06 2024
 import random
 import matplotlib.pyplot as plt
 
-def Graph(value) -> None:
+def Graph(value, contribution) -> None:
     y = [x for x in range(len(value))]
     plt.title("Projected Investment Growth")
     plt.xlabel("Number of Years")
     plt.ylabel("Account Balance")
-    plt.plot(y, value)
+    plt.plot(y, value, label = "Value")
+    plt.plot(y, contribution, label = "Contribution")
     plt.grid()
+    plt.legend()
     plt.savefig("Roth Forecast.jpg")
     plt.show()
     plt.close()
@@ -22,10 +24,15 @@ def Graph(value) -> None:
 def Main() -> None:
     # Set starting variables
     value = []
+    contribution_list = []
+    contribution_value = []
     age = int(input("Current Age: "))
     starting_value = float(input("Starting Roth IRA Value: "))
     value.append(starting_value)
+    deposit_value = float(input("Starting Deposit Value: "))
     contribution = float(input("Contributions per year ($7000 Limit): "))
+    contribution_list.append(deposit_value)
+    contribution_value.append(deposit_value)
     i = 0
     
     # iterate until you have your first million dollars
@@ -37,6 +44,8 @@ def Main() -> None:
         age+=1
         starting_value = (starting_value*annual_return) + contribution
         value.append(starting_value)
+        contribution_list.append(contribution)
+        contribution_value.append(sum(contribution_list))
     print("\n"+ str(i), "years")
     print(age, "years old")
     print("$"+str(round(starting_value,2)), "\n")
@@ -50,6 +59,8 @@ def Main() -> None:
         i+=1
         starting_value = (starting_value*annual_return) + contribution
         value.append(starting_value)
+        contribution_list.append(contribution)
+        contribution_value.append(sum(contribution_list))
     print(i, "years")
     print(age, "years old")
     print("$"+str(round(starting_value,2)), "\n")
@@ -60,12 +71,14 @@ def Main() -> None:
     age+=1
     final_value = (starting_value*annual_return)
     value.append(final_value)
+    contribution_list.append(0)
+    contribution_value.append(sum(contribution_list))
     print(i, "years")
     print(age, "years old")
     print("$",round(final_value,2))
     print("You made $" + str(round(final_value-starting_value,2)) + " without contributions after you retired.\n")
     
-    Graph(value)
+    Graph(value, contribution_value)
     
 if __name__=="__main__":
     Main()
