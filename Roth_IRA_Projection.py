@@ -30,15 +30,20 @@ def Main() -> None:
     starting_value = float(input("Starting Roth IRA Value: "))
     value.append(starting_value)
     deposit_value = float(input("Starting Deposit Value: "))
-    contribution = float(input("Contributions per year ($7000 Limit): "))
+    contribution = float(input("Contributions per year ($7500 Limit): "))
     contribution_list.append(deposit_value)
     contribution_value.append(deposit_value)
     i = 0
+    check = 0
     
     # iterate until you have your first million dollars
     while starting_value < 1000000:
-        if age >= 50 and contribution != 8000:
-            contribution = float(8000) 
+        if age >= 50 and contribution != 8600:
+            contribution = float(8600) 
+        if contribution_value[len(contribution_value)-1]<(value[len(value)-1]-contribution_value[len(contribution_value)-1]) and check == 0:
+            check = 1
+            print("\n%0.0f years old when returns are greater than contributions." % age)
+        
         annual_return = round(random.uniform(1.07,1.10),2)
         i+=1
         age+=1
@@ -52,9 +57,9 @@ def Main() -> None:
 
     # iterate until you are of retiring age.
     while age < 65:
-        if age >= 50 and contribution != 8000:
-            contribution = 8000  
-        annual_return = round(random.uniform(1.07,1.10),2)
+        if age >= 50 and contribution != 8600:
+            contribution = 8600  
+        annual_return = round(random.uniform(1.07,1.10), 2)
         age+=1
         i+=1
         starting_value = (starting_value*annual_return) + contribution
